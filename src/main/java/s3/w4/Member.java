@@ -2,12 +2,14 @@ package s3.w4;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import utils.CurrencyUtils;
 
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class Member {
 
     private String name;
@@ -24,10 +26,18 @@ public class Member {
         }
     }
 
-    public void payDebt(int amount) {
+    public void payDebt(int amount) throws Exception {
+        if (amount < getMinimalPaymentDebt()) {
+            throw new Exception("please follow the minimum debt payment");
+        }
+
         System.out.printf("Pay debt : %s \n", CurrencyUtils.getRupiahFormat().format(amount));
         debt -= amount;
         System.out.printf("Your loan now is : %s \n", CurrencyUtils.getRupiahFormat().format(debt));
+    }
+
+    private int getMinimalPaymentDebt() {
+        return (int) (debt * 0.07);
     }
 
     @Override

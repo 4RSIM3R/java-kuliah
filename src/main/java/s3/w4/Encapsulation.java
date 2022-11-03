@@ -11,8 +11,12 @@ public class Encapsulation {
     private int age;
 
 
-    public void setAge(int age) {
-        this.age = Math.min(age, 30);
+    public void setAge(int age) throws Exception {
+       if (age > 15 && age < 55) {
+           this.age = age;
+       } else {
+           throw new Exception("Invalid Age"); // throw exception when age is not fit the rules
+       }
     }
 
     @Override
